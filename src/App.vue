@@ -1,13 +1,12 @@
 <template>
-  <h1>{{ count }}</h1>
+  <Fruits />
 </template>
 
 <script>
+import Fruits from "~/components/Fruits";
 export default {
-  data() {
-    return {
-      count: 0,
-    };
+  components: {
+    Fruits,
   },
 };
 </script>

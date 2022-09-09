@@ -1,9 +1,16 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
+  resolve: {
+    extensions: [".js", ".vue"],
+    alias: {
+      "~": path.resolve(__dirname, "src"),
+      assets: path.resolve(__dirname, "src/assets"),
+    },
+  },
   entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -13,12 +20,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ["vue-style-loader", "style-loader", "css-loader"],
+        test: /\.s?css$/,
+        use: ["vue-style-loader", "style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.vue$/,
         use: ["vue-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/,
+        use: ["file-loader"],
       },
     ],
   },
@@ -31,4 +42,7 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
   ],
+  devServer: {
+    host: "localhost",
+  },
 };
